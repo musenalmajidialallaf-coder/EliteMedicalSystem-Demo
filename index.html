@@ -317,6 +317,7 @@ th{background:#eff6ff;color:#1d4ed8}
 
 <script>
 function login(){
+    showToast("تم تسجيل الدخول بنجاح");
     document.getElementById("login").style.display="none";
     document.getElementById("app").style.display="block";
 }
@@ -335,6 +336,69 @@ function page(id,btn){
 
     document.getElementById("title").innerText = btn.innerText;
 }
+
+function showToast(message){
+    let toast = document.createElement("div");
+    toast.innerText = message;
+    toast.style.position = "fixed";
+    toast.style.left = "20px";
+    toast.style.bottom = "20px";
+    toast.style.background = "#0f172a";
+    toast.style.color = "white";
+    toast.style.padding = "14px 18px";
+    toast.style.borderRadius = "12px";
+    toast.style.boxShadow = "0 10px 30px #0003";
+    toast.style.zIndex = "9999";
+    toast.style.fontWeight = "bold";
+    document.body.appendChild(toast);
+
+    setTimeout(()=>{
+        toast.remove();
+    },2500);
+}
+
+document.addEventListener("click", function(e){
+    if(e.target.tagName === "BUTTON"){
+        let text = e.target.innerText;
+
+        if(text.includes("حفظ")){
+            showToast("تم الحفظ بنجاح");
+        }
+
+        if(text.includes("إضافة إلى مرضى اليوم")){
+            showToast("تمت إضافة المريض إلى قائمة اليوم");
+        }
+
+        if(text.includes("طباعة الوصفة")){
+            showToast("تم تجهيز الوصفة للطباعة");
+            window.print();
+        }
+
+        if(text.includes("تحميل زيارة سابقة")){
+            showToast("تم تحميل آخر زيارة للمريض");
+        }
+
+        if(text.includes("حذف من اليوم")){
+            showToast("تم حذف المريض من قائمة اليوم");
+        }
+
+        if(text.includes("فتح الملف") || text === "فتح"){
+            document.querySelectorAll(".nav button").forEach(btn=>{
+                if(btn.innerText.includes("السجل الطبي")){
+                    btn.click();
+                }
+            });
+        }
+    }
+});
+
+document.querySelectorAll(".tabs button").forEach(btn=>{
+    btn.addEventListener("click",function(){
+        document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+        this.classList.add("active");
+        showToast("تم فتح تبويب " + this.innerText);
+    });
+});
 </script>
 
 </body>
