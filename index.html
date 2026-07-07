@@ -3,341 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elite Medical System Demo</title>
+<title>Elite Medical System</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    font-family:Tahoma, Arial, sans-serif;
+:root{
+    --primary:#2563eb;
+    --dark:#0f172a;
+    --bg:#f1f5f9;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#f59e0b;
 }
 
-body{
-    margin:0;
-    background:#EEF3FA;
-    color:#1E293B;
+*{box-sizing:border-box;font-family:Tahoma,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text)}
+button{border:0;border-radius:10px;padding:10px 15px;background:var(--primary);color:white;font-weight:bold;cursor:pointer}
+input,select,textarea{
+    width:100%;border:1px solid var(--border);border-radius:10px;
+    padding:11px;background:#f8fafc;margin-top:6px
 }
+textarea{min-height:85px;resize:none}
 
-/* Login */
-.login-page{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+.login{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:linear-gradient(135deg,#0f172a,#1d4ed8);
 }
-
 .login-card{
-    width:100%;
-    max-width:420px;
-    background:white;
-    border-radius:24px;
-    padding:30px;
-    box-shadow:0 20px 50px rgba(15,23,42,.18);
+    background:white;width:100%;max-width:420px;border-radius:24px;padding:32px;
+    box-shadow:0 25px 70px #0005
 }
+.logo{font-size:30px;font-weight:900;color:var(--primary);text-align:center}
+.sub{text-align:center;color:var(--muted);margin:10px 0 25px}
 
-.logo{
-    text-align:center;
-    font-size:28px;
-    font-weight:900;
-    color:#2563EB;
-    margin-bottom:8px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#64748B;
-    margin-bottom:28px;
-}
-
-label{
-    font-weight:bold;
-    font-size:14px;
-}
-
-input, select, textarea{
-    width:100%;
-    padding:13px;
-    margin:8px 0 15px;
-    border:1px solid #CBD5E1;
-    border-radius:12px;
-    font-size:15px;
-    background:#F8FAFC;
-}
-
-button{
-    border:none;
-    border-radius:12px;
-    padding:12px 18px;
-    background:#2563EB;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#1D4ED8;
-}
-
-/* App */
-.app{
-    display:none;
-    min-height:100vh;
-}
-
+.app{display:none}
 .sidebar{
-    position:fixed;
-    right:0;
-    top:0;
-    width:260px;
-    height:100vh;
-    background:#0F172A;
-    color:white;
-    padding:22px;
+    position:fixed;right:0;top:0;width:270px;height:100vh;background:var(--dark);
+    padding:22px;color:white
 }
-
-.brand{
-    font-size:22px;
-    font-weight:900;
-    color:#93C5FD;
-    margin-bottom:8px;
-}
-
-.version{
-    font-size:13px;
-    color:#CBD5E1;
-    margin-bottom:25px;
-}
-
+.brand{font-size:23px;font-weight:900;color:#93c5fd}
+.edition{font-size:13px;color:#cbd5e1;margin:7px 0 25px}
 .nav button{
-    display:block;
-    width:100%;
-    background:transparent;
-    color:white;
-    text-align:right;
-    margin-bottom:9px;
-    border:1px solid #334155;
+    width:100%;margin-bottom:8px;background:transparent;border:1px solid #334155;
+    text-align:right;color:white
 }
+.nav button.active,.nav button:hover{background:var(--primary);border-color:var(--primary)}
 
-.nav button.active,
-.nav button:hover{
-    background:#2563EB;
-    border-color:#2563EB;
-}
-
-.main{
-    margin-right:260px;
-    padding:24px;
-}
-
+.main{margin-right:270px;padding:22px}
 .topbar{
-    background:white;
-    border-radius:20px;
-    padding:18px 22px;
-    margin-bottom:20px;
-    box-shadow:0 8px 25px rgba(15,23,42,.08);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    background:white;border-radius:18px;padding:18px 22px;margin-bottom:18px;
+    box-shadow:0 8px 22px #0001;display:flex;justify-content:space-between;align-items:center
 }
+.topbar h2{margin:0}
+.topbar span{color:var(--muted)}
 
-.topbar h2{
-    margin:0 0 5px;
-}
+.page{display:none}
+.page.active{display:block}
 
-.topbar span{
-    color:#64748B;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-}
-
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .card{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 8px 25px rgba(15,23,42,.08);
+    background:white;border-radius:18px;padding:18px;box-shadow:0 8px 22px #0001;
+    border:1px solid #eef2f7
 }
+.stat h3{margin:0;color:var(--primary);font-size:30px}
+.stat p{margin:7px 0 0;color:var(--muted)}
 
-.stat h2{
-    margin:0;
-    color:#2563EB;
-    font-size:32px;
-}
-
-.stat p{
-    margin:8px 0 0;
-    color:#64748B;
-}
-
-.section-title{
-    font-size:18px;
-    font-weight:900;
-    margin-bottom:15px;
-}
+.title{font-size:18px;font-weight:900;margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 
 table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 8px 25px rgba(15,23,42,.08);
+    width:100%;border-collapse:collapse;background:white;border-radius:16px;overflow:hidden;
+    box-shadow:0 8px 22px #0001
 }
+th,td{padding:13px;border-bottom:1px solid var(--border);text-align:right}
+th{background:#eff6ff;color:#1d4ed8}
+.badge{padding:5px 10px;border-radius:30px;font-size:13px;font-weight:bold}
+.wait{background:#fef3c7;color:#92400e}
+.with-doctor{background:#dbeafe;color:#1d4ed8}
+.done{background:#dcfce7;color:#166534}
+.cancel{background:#fee2e2;color:#991b1b}
 
-th,td{
-    padding:14px;
-    border-bottom:1px solid #E2E8F0;
-    text-align:right;
-}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{background:#e2e8f0;color:#1e293b}
+.tabs button.active{background:var(--primary);color:white}
 
-th{
-    background:#EFF6FF;
-    color:#1D4ED8;
-}
-
-.badge{
-    padding:6px 11px;
-    border-radius:50px;
-    font-size:13px;
-    font-weight:bold;
-}
-
-.wait{
-    background:#FEF3C7;
-    color:#92400E;
-}
-
-.doctor{
-    background:#DBEAFE;
-    color:#1D4ED8;
-}
-
-.done{
-    background:#DCFCE7;
-    color:#166534;
-}
-
-.cancel{
-    background:#FEE2E2;
-    color:#991B1B;
-}
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-textarea{
-    min-height:95px;
-    resize:none;
-}
-
-.tabs{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:15px;
-}
-
-.tabs button{
-    background:#E2E8F0;
-    color:#1E293B;
-}
-
-.tabs button.active{
-    background:#2563EB;
-    color:white;
-}
-
-.action-row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:10px;
-}
-
-.secondary{
-    background:#0F172A;
-}
-
-.danger{
-    background:#DC2626;
-}
-
-.success{
-    background:#16A34A;
-}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.dark{background:#0f172a}
+.green{background:var(--success)}
+.red{background:var(--danger)}
 
 .note{
-    background:#EFF6FF;
-    border-right:5px solid #2563EB;
-    padding:14px;
-    border-radius:14px;
-    color:#1E40AF;
-    margin-bottom:15px;
+    background:#eff6ff;border-right:5px solid var(--primary);padding:13px;
+    border-radius:13px;color:#1e40af;margin-bottom:14px
 }
 
-/* Mobile */
 @media(max-width:900px){
-    .sidebar{
-        position:relative;
-        width:100%;
-        height:auto;
-    }
-
-    .main{
-        margin-right:0;
-        padding:15px;
-    }
-
-    .topbar{
-        display:block;
-    }
-
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
+    .sidebar{position:relative;width:100%;height:auto}
+    .main{margin-right:0;padding:14px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .form-grid{grid-template-columns:1fr}
+    .topbar{display:block}
 }
-
 @media(max-width:520px){
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    table{
-        font-size:13px;
-    }
-
-    th,td{
-        padding:10px;
-    }
+    .grid{grid-template-columns:1fr}
+    table{font-size:13px}
+    th,td{padding:9px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Login -->
-<div class="login-page" id="loginPage">
+<div class="login" id="login">
     <div class="login-card">
         <div class="logo">Elite Medical System</div>
-        <div class="subtitle">نظام احترافي لإدارة العيادات والمراكز الطبية</div>
+        <div class="sub">Professional Clinic Management System</div>
 
         <label>اسم المستخدم</label>
         <input value="doctor">
@@ -345,177 +128,95 @@ textarea{
         <label>كلمة المرور</label>
         <input type="password" value="1234">
 
-        <button style="width:100%;margin-top:8px" onclick="login()">دخول للنظام</button>
+        <button style="width:100%;margin-top:10px" onclick="login()">دخول</button>
     </div>
 </div>
 
-<!-- App -->
 <div class="app" id="app">
 
     <aside class="sidebar">
-        <div class="brand">EMS Demo</div>
-        <div class="version">Pro Edition - Presentation Mode</div>
+        <div class="brand">EMS</div>
+        <div class="edition">Pro Edition - Demo Mode</div>
 
         <div class="nav">
-            <button class="active" onclick="showPage('dashboard', this)">لوحة التحكم</button>
-            <button onclick="showPage('today', this)">مرضى اليوم</button>
-            <button onclick="showPage('patients', this)">المرضى</button>
-            <button onclick="showPage('record', this)">السجل الطبي</button>
-            <button onclick="showPage('appointments', this)">المواعيد</button>
-            <button onclick="showPage('operations', this)">العمليات</button>
-            <button onclick="showPage('reports', this)">التقارير</button>
-            <button onclick="showPage('settings', this)">الإعدادات</button>
+            <button class="active" onclick="page('dashboard',this)">🏠 لوحة التحكم</button>
+            <button onclick="page('today',this)">🧑‍⚕️ مرضى اليوم</button>
+            <button onclick="page('patients',this)">📁 المرضى</button>
+            <button onclick="page('record',this)">📋 السجل الطبي</button>
+            <button onclick="page('appointments',this)">📅 المواعيد</button>
+            <button onclick="page('operations',this)">🏥 العمليات</button>
+            <button onclick="page('reports',this)">📊 التقارير</button>
+            <button onclick="page('settings',this)">⚙️ الإعدادات</button>
         </div>
     </aside>
 
     <main class="main">
-
         <div class="topbar">
             <div>
-                <h2 id="pageTitle">لوحة التحكم</h2>
-                <span>مرحباً دكتور محسن، هذه نسخة عرض تجريبية</span>
+                <h2 id="title">🏠 لوحة التحكم</h2>
+                <span>مرحباً دكتور محسن - نسخة عرض للاستعراض الطبي</span>
             </div>
-            <button class="secondary" onclick="logout()">تسجيل خروج</button>
+            <button class="dark" onclick="logout()">تسجيل خروج</button>
         </div>
 
-        <!-- Dashboard -->
         <section id="dashboard" class="page active">
             <div class="grid">
-                <div class="card stat">
-                    <h2>24</h2>
-                    <p>مرضى اليوم</p>
-                </div>
-                <div class="card stat">
-                    <h2>8</h2>
-                    <p>مواعيد قادمة</p>
-                </div>
-                <div class="card stat">
-                    <h2>312</h2>
-                    <p>إجمالي المرضى</p>
-                </div>
-                <div class="card stat">
-                    <h2>12</h2>
-                    <p>عمليات مسجلة</p>
-                </div>
+                <div class="card stat"><h3>24</h3><p>مرضى اليوم</p></div>
+                <div class="card stat"><h3>312</h3><p>إجمالي المرضى</p></div>
+                <div class="card stat"><h3>8</h3><p>مواعيد قادمة</p></div>
+                <div class="card stat"><h3>12</h3><p>عمليات مسجلة</p></div>
             </div>
 
             <br>
 
             <div class="card">
-                <div class="section-title">نظرة عامة</div>
-                <div class="note">
-                    هذا الديمو مخصص للاستعراض فقط، يعمل على الموبايل والآيباد والمتصفح، ولا يحتوي على قاعدة بيانات حقيقية.
-                </div>
+                <div class="title">نظرة عامة على العيادة</div>
+                <div class="note">هذه نسخة Web Demo مطابقة لفكرة برنامج EMS الحقيقي، مخصصة للعرض على الموبايل والآيباد فقط.</div>
                 <table>
-                    <tr>
-                        <th>المريض</th>
-                        <th>العمر</th>
-                        <th>الحالة</th>
-                        <th>الوقت</th>
-                    </tr>
-                    <tr>
-                        <td>أحمد علي</td>
-                        <td>45</td>
-                        <td><span class="badge wait">منتظر</span></td>
-                        <td>10:00</td>
-                    </tr>
-                    <tr>
-                        <td>سارة محمد</td>
-                        <td>32</td>
-                        <td><span class="badge doctor">عند الطبيب</span></td>
-                        <td>10:30</td>
-                    </tr>
-                    <tr>
-                        <td>خالد عمر</td>
-                        <td>51</td>
-                        <td><span class="badge done">تمت الزيارة</span></td>
-                        <td>11:00</td>
-                    </tr>
+                    <tr><th>المريض</th><th>العمر</th><th>الحالة</th><th>وقت الدخول</th></tr>
+                    <tr><td>أحمد علي</td><td>45</td><td><span class="badge wait">منتظر</span></td><td>10:00</td></tr>
+                    <tr><td>سارة محمد</td><td>32</td><td><span class="badge with-doctor">عند الطبيب</span></td><td>10:30</td></tr>
+                    <tr><td>خالد عمر</td><td>51</td><td><span class="badge done">تمت الزيارة</span></td><td>11:00</td></tr>
                 </table>
             </div>
         </section>
 
-        <!-- Today -->
         <section id="today" class="page">
             <div class="card">
-                <div class="section-title">قائمة مرضى اليوم</div>
+                <div class="title">مرضى اليوم</div>
                 <table>
-                    <tr>
-                        <th>الاسم</th>
-                        <th>العمر</th>
-                        <th>رقم الهاتف</th>
-                        <th>الحالة</th>
-                        <th>إجراء</th>
-                    </tr>
-                    <tr>
-                        <td>أحمد علي</td>
-                        <td>45</td>
-                        <td>07700000000</td>
-                        <td><span class="badge wait">منتظر</span></td>
-                        <td><button>فتح</button></td>
-                    </tr>
-                    <tr>
-                        <td>سارة محمد</td>
-                        <td>32</td>
-                        <td>07500000000</td>
-                        <td><span class="badge doctor">عند الطبيب</span></td>
-                        <td><button>فتح</button></td>
-                    </tr>
-                    <tr>
-                        <td>خالد عمر</td>
-                        <td>51</td>
-                        <td>07800000000</td>
-                        <td><span class="badge done">تمت الزيارة</span></td>
-                        <td><button class="danger">حذف من اليوم</button></td>
-                    </tr>
+                    <tr><th>الاسم</th><th>العمر</th><th>الهاتف</th><th>الحالة</th><th>إجراء</th></tr>
+                    <tr><td>أحمد علي</td><td>45</td><td>07700000000</td><td><span class="badge wait">منتظر</span></td><td><button>فتح</button></td></tr>
+                    <tr><td>سارة محمد</td><td>32</td><td>07500000000</td><td><span class="badge with-doctor">عند الطبيب</span></td><td><button>فتح</button></td></tr>
+                    <tr><td>خالد عمر</td><td>51</td><td>07800000000</td><td><span class="badge done">تمت الزيارة</span></td><td><button class="red">حذف من اليوم</button></td></tr>
                 </table>
             </div>
         </section>
 
-        <!-- Patients -->
         <section id="patients" class="page">
             <div class="card">
-                <div class="section-title">إضافة مريض جديد</div>
+                <div class="title">إضافة مريض</div>
                 <div class="form-grid">
                     <input placeholder="الاسم الكامل">
                     <input placeholder="العمر">
                     <input placeholder="رقم الهاتف">
                     <input placeholder="العنوان">
                 </div>
-                <div class="action-row">
+                <div class="actions">
                     <button>حفظ المريض</button>
-                    <button class="success">إضافة إلى مرضى اليوم</button>
+                    <button class="green">إضافة إلى مرضى اليوم</button>
                 </div>
             </div>
 
             <br>
 
             <table>
-                <tr>
-                    <th>الاسم</th>
-                    <th>العمر</th>
-                    <th>الهاتف</th>
-                    <th>العنوان</th>
-                    <th>إجراء</th>
-                </tr>
-                <tr>
-                    <td>أحمد علي</td>
-                    <td>45</td>
-                    <td>07700000000</td>
-                    <td>الموصل</td>
-                    <td><button>فتح الملف</button></td>
-                </tr>
-                <tr>
-                    <td>سارة محمد</td>
-                    <td>32</td>
-                    <td>07500000000</td>
-                    <td>الموصل</td>
-                    <td><button>فتح الملف</button></td>
-                </tr>
+                <tr><th>الاسم</th><th>العمر</th><th>الهاتف</th><th>العنوان</th><th>إجراء</th></tr>
+                <tr><td>أحمد علي</td><td>45</td><td>07700000000</td><td>الموصل</td><td><button>فتح الملف</button></td></tr>
+                <tr><td>سارة محمد</td><td>32</td><td>07500000000</td><td>الموصل</td><td><button>فتح الملف</button></td></tr>
             </table>
         </section>
 
-        <!-- Medical Record -->
         <section id="record" class="page">
             <div class="tabs">
                 <button class="active">History</button>
@@ -527,8 +228,7 @@ textarea{
             </div>
 
             <div class="card">
-                <div class="section-title">السجل الطبي للمريض</div>
-
+                <div class="title">السجل الطبي - أحمد علي</div>
                 <div class="form-grid">
                     <textarea placeholder="Chief Complaint"></textarea>
                     <textarea placeholder="Present Illness"></textarea>
@@ -540,23 +240,20 @@ textarea{
                     <textarea placeholder="Neurological Examination"></textarea>
                     <textarea placeholder="Recommended Investigations"></textarea>
                     <textarea placeholder="Final Diagnosis"></textarea>
-                    <input placeholder="Next Visit Date" type="date">
-                    <input placeholder="Medication: Lansoprazole 30mg cap 1×1 for 5 days">
+                    <input type="date">
+                    <input placeholder="Lansoprazole 30mg cap 1×1 for 5 days">
                 </div>
-
-                <div class="action-row">
+                <div class="actions">
                     <button>حفظ الزيارة</button>
-                    <button class="secondary">تحميل زيارة سابقة</button>
-                    <button class="success">طباعة الوصفة</button>
+                    <button class="dark">تحميل زيارة سابقة</button>
+                    <button class="green">طباعة الوصفة</button>
                 </div>
             </div>
         </section>
 
-        <!-- Appointments -->
         <section id="appointments" class="page">
             <div class="card">
-                <div class="section-title">إضافة موعد</div>
-
+                <div class="title">إضافة موعد</div>
                 <div class="form-grid">
                     <input placeholder="اسم المريض">
                     <input type="date">
@@ -567,104 +264,50 @@ textarea{
                         <option>ملغي</option>
                     </select>
                 </div>
-
                 <button>حفظ الموعد</button>
             </div>
 
             <br>
 
             <table>
-                <tr>
-                    <th>المريض</th>
-                    <th>التاريخ</th>
-                    <th>الوقت</th>
-                    <th>الحالة</th>
-                </tr>
-                <tr>
-                    <td>أحمد علي</td>
-                    <td>2026-07-10</td>
-                    <td>10:30</td>
-                    <td><span class="badge wait">منتظر</span></td>
-                </tr>
-                <tr>
-                    <td>نور أحمد</td>
-                    <td>2026-07-11</td>
-                    <td>12:00</td>
-                    <td><span class="badge done">تم الحضور</span></td>
-                </tr>
+                <tr><th>المريض</th><th>التاريخ</th><th>الوقت</th><th>الحالة</th></tr>
+                <tr><td>أحمد علي</td><td>2026-07-10</td><td>10:30</td><td><span class="badge wait">منتظر</span></td></tr>
+                <tr><td>نور أحمد</td><td>2026-07-11</td><td>12:00</td><td><span class="badge done">تم الحضور</span></td></tr>
             </table>
         </section>
 
-        <!-- Operations -->
         <section id="operations" class="page">
             <div class="card">
-                <div class="section-title">تسجيل عملية</div>
-
+                <div class="title">تسجيل عملية</div>
                 <div class="form-grid">
                     <input placeholder="اسم المريض">
                     <input placeholder="نوع العملية">
                     <input placeholder="مكان العملية">
                     <input type="date">
                 </div>
-
                 <button>حفظ العملية</button>
             </div>
-
-            <br>
-
-            <table>
-                <tr>
-                    <th>المريض</th>
-                    <th>نوع العملية</th>
-                    <th>المكان</th>
-                    <th>التاريخ</th>
-                </tr>
-                <tr>
-                    <td>خالد عمر</td>
-                    <td>Appendectomy</td>
-                    <td>مستشفى السلام</td>
-                    <td>2026-06-20</td>
-                </tr>
-            </table>
         </section>
 
-        <!-- Reports -->
         <section id="reports" class="page">
             <div class="grid">
-                <div class="card stat">
-                    <h2>156</h2>
-                    <p>زيارات هذا الشهر</p>
-                </div>
-                <div class="card stat">
-                    <h2>42</h2>
-                    <p>مواعيد مكتملة</p>
-                </div>
-                <div class="card stat">
-                    <h2>18</h2>
-                    <p>مرضى جدد</p>
-                </div>
-                <div class="card stat">
-                    <h2>12</h2>
-                    <p>عمليات مسجلة</p>
-                </div>
+                <div class="card stat"><h3>156</h3><p>زيارات هذا الشهر</p></div>
+                <div class="card stat"><h3>42</h3><p>مواعيد مكتملة</p></div>
+                <div class="card stat"><h3>18</h3><p>مرضى جدد</p></div>
+                <div class="card stat"><h3>12</h3><p>عمليات مسجلة</p></div>
             </div>
         </section>
 
-        <!-- Settings -->
         <section id="settings" class="page">
             <div class="card">
-                <div class="section-title">إعدادات النظام</div>
-
+                <div class="title">إعدادات النظام</div>
                 <div class="form-grid">
                     <input value="د. محسن" placeholder="اسم الطبيب">
                     <input value="Elite Medical System" placeholder="اسم النظام">
-                    <select>
-                        <option>Pro Edition</option>
-                        <option>Lite Edition</option>
-                    </select>
+                    <select><option>Pro Edition</option><option>Lite Edition</option></select>
                     <input value="EMS-PRO-DEMO-2026" placeholder="License Key">
                 </div>
-
+                <br>
                 <button>حفظ الإعدادات</button>
             </div>
         </section>
@@ -674,29 +317,23 @@ textarea{
 
 <script>
 function login(){
-    document.getElementById("loginPage").style.display="none";
+    document.getElementById("login").style.display="none";
     document.getElementById("app").style.display="block";
 }
 
 function logout(){
     document.getElementById("app").style.display="none";
-    document.getElementById("loginPage").style.display="flex";
+    document.getElementById("login").style.display="flex";
 }
 
-function showPage(id, button){
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
+function page(id,btn){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 
-    document.querySelectorAll(".nav button").forEach(btn => {
-        btn.classList.remove("active");
-    });
+    document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
 
-    button.classList.add("active");
-
-    document.getElementById("pageTitle").innerText = button.innerText;
+    document.getElementById("title").innerText = btn.innerText;
 }
 </script>
 
