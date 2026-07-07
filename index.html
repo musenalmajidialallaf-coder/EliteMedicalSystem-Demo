@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Medical System Demo</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Tahoma, Arial, sans-serif;
+}
+
+body{
+    margin:0;
+    background:#EEF3FA;
+    color:#1E293B;
+}
+
+/* Login */
+.login-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:white;
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 20px 50px rgba(15,23,42,.18);
+}
+
+.logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:900;
+    color:#2563EB;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#64748B;
+    margin-bottom:28px;
+}
+
+label{
+    font-weight:bold;
+    font-size:14px;
+}
+
+input, select, textarea{
+    width:100%;
+    padding:13px;
+    margin:8px 0 15px;
+    border:1px solid #CBD5E1;
+    border-radius:12px;
+    font-size:15px;
+    background:#F8FAFC;
+}
+
+button{
+    border:none;
+    border-radius:12px;
+    padding:12px 18px;
+    background:#2563EB;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1D4ED8;
+}
+
+/* App */
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    right:0;
+    top:0;
+    width:260px;
+    height:100vh;
+    background:#0F172A;
+    color:white;
+    padding:22px;
+}
+
+.brand{
+    font-size:22px;
+    font-weight:900;
+    color:#93C5FD;
+    margin-bottom:8px;
+}
+
+.version{
+    font-size:13px;
+    color:#CBD5E1;
+    margin-bottom:25px;
+}
+
+.nav button{
+    display:block;
+    width:100%;
+    background:transparent;
+    color:white;
+    text-align:right;
+    margin-bottom:9px;
+    border:1px solid #334155;
+}
+
+.nav button.active,
+.nav button:hover{
+    background:#2563EB;
+    border-color:#2563EB;
+}
+
+.main{
+    margin-right:260px;
+    padding:24px;
+}
+
+.topbar{
+    background:white;
+    border-radius:20px;
+    padding:18px 22px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(15,23,42,.08);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.topbar h2{
+    margin:0 0 5px;
+}
+
+.topbar span{
+    color:#64748B;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(15,23,42,.08);
+}
+
+.stat h2{
+    margin:0;
+    color:#2563EB;
+    font-size:32px;
+}
+
+.stat p{
+    margin:8px 0 0;
+    color:#64748B;
+}
+
+.section-title{
+    font-size:18px;
+    font-weight:900;
+    margin-bottom:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(15,23,42,.08);
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid #E2E8F0;
+    text-align:right;
+}
+
+th{
+    background:#EFF6FF;
+    color:#1D4ED8;
+}
+
+.badge{
+    padding:6px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.wait{
+    background:#FEF3C7;
+    color:#92400E;
+}
+
+.doctor{
+    background:#DBEAFE;
+    color:#1D4ED8;
+}
+
+.done{
+    background:#DCFCE7;
+    color:#166534;
+}
+
+.cancel{
+    background:#FEE2E2;
+    color:#991B1B;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+textarea{
+    min-height:95px;
+    resize:none;
+}
+
+.tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.tabs button{
+    background:#E2E8F0;
+    color:#1E293B;
+}
+
+.tabs button.active{
+    background:#2563EB;
+    color:white;
+}
+
+.action-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.secondary{
+    background:#0F172A;
+}
+
+.danger{
+    background:#DC2626;
+}
+
+.success{
+    background:#16A34A;
+}
+
+.note{
+    background:#EFF6FF;
+    border-right:5px solid #2563EB;
+    padding:14px;
+    border-radius:14px;
+    color:#1E40AF;
+    margin-bottom:15px;
+}
+
+/* Mobile */
+@media(max-width:900px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main{
+        margin-right:0;
+        padding:15px;
+    }
+
+    .topbar{
+        display:block;
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:520px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        font-size:13px;
+    }
+
+    th,td{
+        padding:10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Login -->
+<div class="login-page" id="loginPage">
+    <div class="login-card">
+        <div class="logo">Elite Medical System</div>
+        <div class="subtitle">نظام احترافي لإدارة العيادات والمراكز الطبية</div>
+
+        <label>اسم المستخدم</label>
+        <input value="doctor">
+
+        <label>كلمة المرور</label>
+        <input type="password" value="1234">
+
+        <button style="width:100%;margin-top:8px" onclick="login()">دخول للنظام</button>
+    </div>
+</div>
+
+<!-- App -->
+<div class="app" id="app">
+
+    <aside class="sidebar">
+        <div class="brand">EMS Demo</div>
+        <div class="version">Pro Edition - Presentation Mode</div>
+
+        <div class="nav">
+            <button class="active" onclick="showPage('dashboard', this)">لوحة التحكم</button>
+            <button onclick="showPage('today', this)">مرضى اليوم</button>
+            <button onclick="showPage('patients', this)">المرضى</button>
+            <button onclick="showPage('record', this)">السجل الطبي</button>
+            <button onclick="showPage('appointments', this)">المواعيد</button>
+            <button onclick="showPage('operations', this)">العمليات</button>
+            <button onclick="showPage('reports', this)">التقارير</button>
+            <button onclick="showPage('settings', this)">الإعدادات</button>
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h2 id="pageTitle">لوحة التحكم</h2>
+                <span>مرحباً دكتور محسن، هذه نسخة عرض تجريبية</span>
+            </div>
+            <button class="secondary" onclick="logout()">تسجيل خروج</button>
+        </div>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="page active">
+            <div class="grid">
+                <div class="card stat">
+                    <h2>24</h2>
+                    <p>مرضى اليوم</p>
+                </div>
+                <div class="card stat">
+                    <h2>8</h2>
+                    <p>مواعيد قادمة</p>
+                </div>
+                <div class="card stat">
+                    <h2>312</h2>
+                    <p>إجمالي المرضى</p>
+                </div>
+                <div class="card stat">
+                    <h2>12</h2>
+                    <p>عمليات مسجلة</p>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="section-title">نظرة عامة</div>
+                <div class="note">
+                    هذا الديمو مخصص للاستعراض فقط، يعمل على الموبايل والآيباد والمتصفح، ولا يحتوي على قاعدة بيانات حقيقية.
+                </div>
+                <table>
+                    <tr>
+                        <th>المريض</th>
+                        <th>العمر</th>
+                        <th>الحالة</th>
+                        <th>الوقت</th>
+                    </tr>
+                    <tr>
+                        <td>أحمد علي</td>
+                        <td>45</td>
+                        <td><span class="badge wait">منتظر</span></td>
+                        <td>10:00</td>
+                    </tr>
+                    <tr>
+                        <td>سارة محمد</td>
+                        <td>32</td>
+                        <td><span class="badge doctor">عند الطبيب</span></td>
+                        <td>10:30</td>
+                    </tr>
+                    <tr>
+                        <td>خالد عمر</td>
+                        <td>51</td>
+                        <td><span class="badge done">تمت الزيارة</span></td>
+                        <td>11:00</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Today -->
+        <section id="today" class="page">
+            <div class="card">
+                <div class="section-title">قائمة مرضى اليوم</div>
+                <table>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>العمر</th>
+                        <th>رقم الهاتف</th>
+                        <th>الحالة</th>
+                        <th>إجراء</th>
+                    </tr>
+                    <tr>
+                        <td>أحمد علي</td>
+                        <td>45</td>
+                        <td>07700000000</td>
+                        <td><span class="badge wait">منتظر</span></td>
+                        <td><button>فتح</button></td>
+                    </tr>
+                    <tr>
+                        <td>سارة محمد</td>
+                        <td>32</td>
+                        <td>07500000000</td>
+                        <td><span class="badge doctor">عند الطبيب</span></td>
+                        <td><button>فتح</button></td>
+                    </tr>
+                    <tr>
+                        <td>خالد عمر</td>
+                        <td>51</td>
+                        <td>07800000000</td>
+                        <td><span class="badge done">تمت الزيارة</span></td>
+                        <td><button class="danger">حذف من اليوم</button></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Patients -->
+        <section id="patients" class="page">
+            <div class="card">
+                <div class="section-title">إضافة مريض جديد</div>
+                <div class="form-grid">
+                    <input placeholder="الاسم الكامل">
+                    <input placeholder="العمر">
+                    <input placeholder="رقم الهاتف">
+                    <input placeholder="العنوان">
+                </div>
+                <div class="action-row">
+                    <button>حفظ المريض</button>
+                    <button class="success">إضافة إلى مرضى اليوم</button>
+                </div>
+            </div>
+
+            <br>
+
+            <table>
+                <tr>
+                    <th>الاسم</th>
+                    <th>العمر</th>
+                    <th>الهاتف</th>
+                    <th>العنوان</th>
+                    <th>إجراء</th>
+                </tr>
+                <tr>
+                    <td>أحمد علي</td>
+                    <td>45</td>
+                    <td>07700000000</td>
+                    <td>الموصل</td>
+                    <td><button>فتح الملف</button></td>
+                </tr>
+                <tr>
+                    <td>سارة محمد</td>
+                    <td>32</td>
+                    <td>07500000000</td>
+                    <td>الموصل</td>
+                    <td><button>فتح الملف</button></td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Medical Record -->
+        <section id="record" class="page">
+            <div class="tabs">
+                <button class="active">History</button>
+                <button>Examination</button>
+                <button>Investigations</button>
+                <button>Diagnosis</button>
+                <button>Medications</button>
+                <button>Advice</button>
+            </div>
+
+            <div class="card">
+                <div class="section-title">السجل الطبي للمريض</div>
+
+                <div class="form-grid">
+                    <textarea placeholder="Chief Complaint"></textarea>
+                    <textarea placeholder="Present Illness"></textarea>
+                    <textarea placeholder="Past Medical History"></textarea>
+                    <textarea placeholder="Past Surgical History"></textarea>
+                    <textarea placeholder="Drug History"></textarea>
+                    <textarea placeholder="Family History"></textarea>
+                    <textarea placeholder="General Examination"></textarea>
+                    <textarea placeholder="Neurological Examination"></textarea>
+                    <textarea placeholder="Recommended Investigations"></textarea>
+                    <textarea placeholder="Final Diagnosis"></textarea>
+                    <input placeholder="Next Visit Date" type="date">
+                    <input placeholder="Medication: Lansoprazole 30mg cap 1×1 for 5 days">
+                </div>
+
+                <div class="action-row">
+                    <button>حفظ الزيارة</button>
+                    <button class="secondary">تحميل زيارة سابقة</button>
+                    <button class="success">طباعة الوصفة</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointments -->
+        <section id="appointments" class="page">
+            <div class="card">
+                <div class="section-title">إضافة موعد</div>
+
+                <div class="form-grid">
+                    <input placeholder="اسم المريض">
+                    <input type="date">
+                    <input type="time">
+                    <select>
+                        <option>منتظر</option>
+                        <option>تم الحضور</option>
+                        <option>ملغي</option>
+                    </select>
+                </div>
+
+                <button>حفظ الموعد</button>
+            </div>
+
+            <br>
+
+            <table>
+                <tr>
+                    <th>المريض</th>
+                    <th>التاريخ</th>
+                    <th>الوقت</th>
+                    <th>الحالة</th>
+                </tr>
+                <tr>
+                    <td>أحمد علي</td>
+                    <td>2026-07-10</td>
+                    <td>10:30</td>
+                    <td><span class="badge wait">منتظر</span></td>
+                </tr>
+                <tr>
+                    <td>نور أحمد</td>
+                    <td>2026-07-11</td>
+                    <td>12:00</td>
+                    <td><span class="badge done">تم الحضور</span></td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Operations -->
+        <section id="operations" class="page">
+            <div class="card">
+                <div class="section-title">تسجيل عملية</div>
+
+                <div class="form-grid">
+                    <input placeholder="اسم المريض">
+                    <input placeholder="نوع العملية">
+                    <input placeholder="مكان العملية">
+                    <input type="date">
+                </div>
+
+                <button>حفظ العملية</button>
+            </div>
+
+            <br>
+
+            <table>
+                <tr>
+                    <th>المريض</th>
+                    <th>نوع العملية</th>
+                    <th>المكان</th>
+                    <th>التاريخ</th>
+                </tr>
+                <tr>
+                    <td>خالد عمر</td>
+                    <td>Appendectomy</td>
+                    <td>مستشفى السلام</td>
+                    <td>2026-06-20</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Reports -->
+        <section id="reports" class="page">
+            <div class="grid">
+                <div class="card stat">
+                    <h2>156</h2>
+                    <p>زيارات هذا الشهر</p>
+                </div>
+                <div class="card stat">
+                    <h2>42</h2>
+                    <p>مواعيد مكتملة</p>
+                </div>
+                <div class="card stat">
+                    <h2>18</h2>
+                    <p>مرضى جدد</p>
+                </div>
+                <div class="card stat">
+                    <h2>12</h2>
+                    <p>عمليات مسجلة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="page">
+            <div class="card">
+                <div class="section-title">إعدادات النظام</div>
+
+                <div class="form-grid">
+                    <input value="د. محسن" placeholder="اسم الطبيب">
+                    <input value="Elite Medical System" placeholder="اسم النظام">
+                    <select>
+                        <option>Pro Edition</option>
+                        <option>Lite Edition</option>
+                    </select>
+                    <input value="EMS-PRO-DEMO-2026" placeholder="License Key">
+                </div>
+
+                <button>حفظ الإعدادات</button>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+function login(){
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("app").style.display="block";
+}
+
+function logout(){
+    document.getElementById("app").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
+}
+
+function showPage(id, button){
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".nav button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    document.getElementById("pageTitle").innerText = button.innerText;
+}
+</script>
+
+</body>
+</html>
